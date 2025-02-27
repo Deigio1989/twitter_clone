@@ -51,5 +51,6 @@ COPY . .
 # Expor a porta que o Gunicorn usará
 EXPOSE 8000
 
-# Comando padrão para rodar o Gunicorn
-CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Comando para rodar o Gunicorn 
+CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-", "--log-level", "debug"]
+
