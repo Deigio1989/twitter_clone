@@ -1,18 +1,5 @@
-# Use a imagem base do Python
-FROM python:3.12-slim AS base
-
-# Variáveis de ambiente para Python e Poetry
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.6.1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
+# Usar uma imagem base
+FROM python:3.12-slim
 
 # Atualizar e instalar dependências
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -24,14 +11,14 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar o Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    mv /root/.local/bin/poetry /usr/local/bin/
 
 # Definir o diretório de trabalho
 WORKDIR /app
 
-
-# Adicionar depuração
-RUN ls -l /app
+# Copiar os arquivos de configuração do Poetry
+COPY poetry.lock pyproject.toml ./
 
 # Instalar dependências do projeto usando o Poetry
 RUN poetry install --no-root -vvv
