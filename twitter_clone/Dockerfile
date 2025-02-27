@@ -23,8 +23,10 @@ ENV PATH="/root/.local/bin:$PATH"
 # Definir o diretório de trabalho
 WORKDIR /app
 
+
 # Copiar arquivos de configuração do Poetry
 COPY poetry.lock pyproject.toml ./
+
 
 # Instalar dependências do projeto usando o Poetry
 RUN poetry install --no-root --no-dev
@@ -37,3 +39,4 @@ EXPOSE 8000
 
 # Comando para rodar o Gunicorn
 CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-", "--log-level", "debug"]
+
