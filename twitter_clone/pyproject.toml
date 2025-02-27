@@ -5,6 +5,7 @@ description = "Twitter Clone"
 authors = ["DiegoSanchez <diegosmtattoo@gmail.com>"]
 readme = "README.md"
 license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4.0"
