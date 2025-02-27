@@ -1,18 +1,9 @@
-# Usar uma imagem base
+# Usar uma imagem base do Python
 FROM python:3.12-slim
 
-# Variáveis de ambiente para Python e Poetry
+# Configurar variáveis de ambiente para Python
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.6.1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
+    PYTHONDONTWRITEBYTECODE=1
 
 # Atualizar e instalar dependências
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -24,26 +15,19 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar o Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - && \
-    /opt/poetry/bin/poetry --version
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Adicionar o Poetry ao PATH
-ENV PATH="/opt/poetry/bin:$PATH"
+ENV PATH="/root/.local/bin:$PATH"
 
 # Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de configuração do Poetry para um diretório temporário
-COPY poetry.lock pyproject.toml /tmp/
+# Copiar arquivos de configuração do Poetry
+COPY poetry.lock pyproject.toml ./
 
-# Mover arquivos para o diretório de trabalho
-RUN mv /tmp/poetry.lock /app/ && mv /tmp/pyproject.toml /app/
-
-# Adicionar depuração para garantir que os arquivos foram movidos
-RUN echo "Arquivos no diretório atual após a movimentação:" && ls -l /app
-
-# Instalar dependências do projeto usando o Poetry, incluindo Gunicorn
-RUN poetry install --no-root -vvv
+# Instalar dependências do projeto usando o Poetry
+RUN poetry install --no-root --no-dev
 
 # Copiar o resto do código do projeto
 COPY . .
@@ -51,6 +35,5 @@ COPY . .
 # Expor a porta que o Gunicorn usará
 EXPOSE 8000
 
-# Comando para rodar o Gunicorn 
+# Comando para rodar o Gunicorn
 CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-", "--log-level", "debug"]
-
