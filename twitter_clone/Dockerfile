@@ -33,14 +33,14 @@ ENV PATH="/opt/poetry/bin:$PATH"
 # Definir o diretório de trabalho
 WORKDIR /app
 
-# Adicionar depuração para garantir que os arquivos existem
-RUN echo "Arquivos no diretório atual antes da cópia:" && ls -l
+# Copiar arquivos do projeto para um diretório temporário
+COPY . /tmp/
 
-# Copiar os arquivos de configuração do Poetry
-COPY poetry.lock pyproject.toml ./
+# Copiar arquivos do diretório temporário para o diretório de trabalho
+RUN cp /tmp/poetry.lock /app/ && cp /tmp/pyproject.toml /app/
 
 # Adicionar depuração para garantir que os arquivos foram copiados
-RUN echo "Arquivos no diretório atual após a cópia:" && ls -l
+RUN echo "Arquivos no diretório atual após a cópia:" && ls -l /app
 
 # Instalar dependências do projeto usando o Poetry
 RUN poetry install --no-root -vvv
