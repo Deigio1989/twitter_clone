@@ -1,0 +1,7 @@
+!poetry.lock
+!pyproject.toml
+
+__pycache__
+*.pyc
+env/
+db.sqlite3
