@@ -29,8 +29,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 # Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos de configuração do Poetry
-COPY poetry.lock pyproject.toml ./
 
 # Adicionar depuração
 RUN ls -l /app
