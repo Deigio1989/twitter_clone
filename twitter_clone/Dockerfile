@@ -33,6 +33,9 @@ ENV PATH="/opt/poetry/bin:$PATH"
 # Definir o diretório de trabalho
 WORKDIR /app
 
+# Adicionar depuração para garantir que os arquivos existem
+RUN echo "Arquivos no diretório atual antes da cópia:" && ls -l
+
 # Copiar arquivos de configuração do Poetry para um diretório temporário
 COPY poetry.lock pyproject.toml /tmp/
 
@@ -51,6 +54,5 @@ COPY . .
 # Expor a porta que o Gunicorn usará
 EXPOSE 8000
 
-# Comando para rodar o Gunicorn 
-CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-", "--log-level", "debug"]
-
+# Comando padrão para rodar o Gunicorn
+CMD ["gunicorn", "--chdir", "./twitter_clone", "twitter_clone.wsgi:application", "--bind", "0.0.0.0:8000"]
