@@ -5,24 +5,22 @@ import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 
-load_dotenv()
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ll8ce0=3x-d5)t)dw7k2@t(7^r_=zeyll-d=*rn+b0w@=+185*'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
 LOGGING = {
     'version': 1,
@@ -113,12 +111,11 @@ WSGI_APPLICATION = 'twitter_clone.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://twitter_clone_db_xlda_user:SZCnbXyKjqNVSbY5SiTMDfPZ8GOmtHPn@dpg-cv0b5q9opnds73b786u0-a.oregon-postgres.render.com/twitter_clone_db_xlda',
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
