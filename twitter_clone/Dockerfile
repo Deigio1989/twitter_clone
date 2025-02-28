@@ -29,7 +29,8 @@ COPY poetry.lock pyproject.toml ./
 
 
 # Instalar dependências do projeto usando o Poetry
-RUN poetry install --no-root --no-dev
+RUN poetry install --no-root --without dev
+
 
 # Copiar o resto do código do projeto
 COPY . .
