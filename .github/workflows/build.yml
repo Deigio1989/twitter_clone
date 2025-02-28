@@ -1,39 +1,38 @@
 name: Python application
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.9]
+        python-version: [3.8, 3.9, 3.10, 3.11, 3.12]
 
- runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install poetry
-      run: |
-        python -m ensurepip
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade poetry
+      - name: Install poetry
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade poetry
 
-    - name: View poetry --help
-      run: poetry --help
+      - name: View poetry --help
+        run: poetry --help
 
-    - name: Change to correct directory
-      run: cd ${{ github.workspace }}/twitter_clone
+      - name: Change to correct directory
+        run: cd ${{ github.workspace }}/caminho/para/seu/diretorio
 
-    - name: Install dependencies
-      run: poetry install
+      - name: Install dependencies
+        run: poetry install
 
-    - name: Run tests
-      run: poetry run pytest
-Ajustes Importantes
+      - name: Run tests
+        run: poetry run pytest
