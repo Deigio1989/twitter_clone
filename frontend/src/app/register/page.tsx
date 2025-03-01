@@ -30,11 +30,14 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const response = await axios.post("http://:8000/api/register/", {
-        username,
-        email,
-        password,
-      });
+      await axios.post(
+        "https://twitter-clone-sn7k.onrender.com/api/register/",
+        {
+          username,
+          email,
+          password,
+        }
+      );
 
       // Redirecione o usuário para a página de login após o registro
       router.push("/login");
