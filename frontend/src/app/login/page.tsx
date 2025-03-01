@@ -14,10 +14,13 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/token/", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://twitter-clone-sn7k.onrender.com/api/token/",
+        {
+          username,
+          password,
+        }
+      );
 
       // Armazene o token no localStorage
       localStorage.setItem("token", response.data.access);

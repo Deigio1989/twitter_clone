@@ -29,9 +29,12 @@ const TweetFeed: React.FC = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:8000/api/tweets/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://twitter-clone-sn7k.onrender.com/api/tweets/",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setTweets(response.data);
       setFilteredTweets(response.data);
     } catch (error) {

@@ -15,7 +15,9 @@ const UserList: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/");
+      const response = await axios.get(
+        "https://twitter-clone-sn7k.onrender.com/api/users/"
+      );
       setUsers(response.data.slice(0, 10)); // Limita a lista para 10 usuários
     } catch (error) {
       setError("Erro ao buscar os usuários. Tente novamente.");

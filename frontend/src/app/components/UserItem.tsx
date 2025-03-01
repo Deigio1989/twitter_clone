@@ -29,7 +29,7 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
       }
 
       await axios.post(
-        `http://localhost:8000/api/follow/${user.id}/`,
+        `https://twitter-clone-sn7k.onrender.com/api/follow/${user.id}/`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
