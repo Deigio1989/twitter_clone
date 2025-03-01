@@ -21,7 +21,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/tweets/",
+        "https://twitter-clone-sn7k.onrender.com/api/tweets/",
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );
