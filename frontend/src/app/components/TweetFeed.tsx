@@ -37,7 +37,7 @@ const TweetFeed: React.FC = () => {
       );
       setTweets(response.data);
       setFilteredTweets(response.data);
-    } catch (error) {
+    } catch {
       setError("Erro ao buscar os tweets. Tente novamente.");
     }
   };

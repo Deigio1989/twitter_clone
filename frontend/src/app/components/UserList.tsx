@@ -3,10 +3,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserItem from "./UserItem";
 
+interface UserProfile {
+  bio: string;
+  location: string;
+  website: string;
+  avatar_url: string;
+}
+
 interface User {
   id: number;
   username: string;
   avatar_url: string;
+  profile: UserProfile;
 }
 
 const UserList: React.FC = () => {
@@ -19,7 +27,7 @@ const UserList: React.FC = () => {
         "https://twitter-clone-sn7k.onrender.com/api/users/"
       );
       setUsers(response.data.slice(0, 10)); // Limita a lista para 10 usuários
-    } catch (error) {
+    } catch {
       setError("Erro ao buscar os usuários. Tente novamente.");
     }
   };
