@@ -2,7 +2,6 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import Image from "next/image";
 
 interface UserProfile {
   avatar_url: string;
@@ -42,7 +41,7 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
 
   return (
     <div className="flex items-center mb-4">
-      <Image
+      <img
         src={`https://robohash.org/${user.username}.png`}
         alt={`${user.username}'s avatar`}
         width={40}
