@@ -86,7 +86,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    'https://twitter-clone-gamma-virid.vercel.app',
 ]
+
 
 
 ROOT_URLCONF = 'twitter_clone.urls'
