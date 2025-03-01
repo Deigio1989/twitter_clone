@@ -27,10 +27,8 @@ const LoginPage: React.FC = () => {
 
       // Redirecione o usuário para a página de feed após o login bem-sucedido
       router.push("/feed");
-    } catch (error) {
-      setError(
-        `Erro ${error.response?.status}: Credenciais inválidas. Tente novamente.`
-      );
+    } catch {
+      setError(`Erro : Credenciais inválidas. Tente novamente.`);
     }
   };
 

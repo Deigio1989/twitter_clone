@@ -28,7 +28,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
       setContent("");
       setError("");
       onPostCreated(); // Chama a função para buscar os tweets após a criação bem-sucedida
-    } catch (error) {
+    } catch {
       setError("Erro ao criar a postagem. Tente novamente.");
     }
   };

@@ -2,6 +2,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import Image from "next/image";
 
 interface UserProfile {
   avatar_url: string;
@@ -34,17 +35,19 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setIsFollowing(true);
-    } catch (error) {
+    } catch {
       alert("Erro ao seguir o usuário. Tente novamente.");
     }
   };
 
   return (
     <div className="flex items-center mb-4">
-      <img
+      <Image
         src={`https://robohash.org/${user.username}.png`}
         alt={`${user.username}'s avatar`}
-        className="w-10 h-10 rounded-full mr-4"
+        width={40}
+        height={40}
+        className="rounded-full mr-4"
       />
       <div className="flex-1">
         <p className="text-lg font-semibold">{user.username}</p>
