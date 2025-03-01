@@ -39,7 +39,7 @@ const RegisterPage: React.FC = () => {
       // Redirecione o usuário para a página de login após o registro
       router.push("/login");
     } catch (error) {
-      if (error.response && error.response.data) {
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
         const errorMessages = Object.values(error.response.data)
           .flat()
           .join(" ");
