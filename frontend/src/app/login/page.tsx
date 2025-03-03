@@ -9,18 +9,16 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://twitter-clone-sn7k.onrender.com/api/token/",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(`${apiUrl}/api/token/`, {
+        username,
+        password,
+      });
 
       // Armazene o token no localStorage
       localStorage.setItem("token", response.data.access);

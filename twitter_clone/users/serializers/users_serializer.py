@@ -4,37 +4,41 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from users.models import UserProfile
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    followers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    following = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)  # Adicionando o ID do usuário
+
     class Meta:
         model = UserProfile
-        fields = ['avatar_url', 'bio', 'location', 'birth_date']
+        fields = ['user_id', 'avatar_url', 'bio', 'location', 'birth_date', 'followers', 'following']
+
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = UserProfileSerializer(read_only=True)
+    profile = UserProfileSerializer()
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'profile']
-    
+
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
         user = User.objects.create(**validated_data)
         UserProfile.objects.create(user=user, **profile_data)
         return user
-    
+
     def update(self, instance, validated_data):
-        profile_data = validated_data.pop('profile')
-        profile = instance.profile
-        
-        instance.username = validated_data.get('username', instance.username)
-        instance.email = validated_data.get('email', instance.email)
+        profile_data = validated_data.pop('profile', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
-        
-        profile.bio = profile_data.get('bio', profile.bio)
-        profile.location = profile_data.get('location', profile.location)
-        profile.birth_date = profile_data.get('birth_date', profile.birth_date)
-        profile.save()
-        
-        return
+
+        if profile_data:
+            profile = instance.profile
+            for attr, value in profile_data.items():
+                setattr(profile, attr, value)
+            profile.save()
+
+        return instance
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
