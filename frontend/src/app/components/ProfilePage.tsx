@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
@@ -40,18 +40,19 @@ const ProfilePage = () => {
     }
   }, []);
 
-  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
-
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${apiUrl}/api/users/profile/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `https://twitter-clone-sn7k.onrender.com/api/users/profile/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setProfile(response.data);
     };
     fetchProfile();
-  }, [apiUrl]);
+  }, [`https://twitter-clone-sn7k.onrender.com/`]);
 
   useEffect(() => {
     setBackgroundImageUrl(
@@ -62,7 +63,7 @@ const ProfilePage = () => {
   const handleUpdateProfile = async () => {
     const token = localStorage.getItem("token");
     await axios.put(
-      `${apiUrl}/api/users/profile/update/`,
+      `https://twitter-clone-sn7k.onrender.com/api/users/profile/update/`,
       { bio: newBio, birth_date: newBirthDate },
       { headers: { Authorization: `Bearer ${token}` } }
     );

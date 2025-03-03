@@ -10,7 +10,6 @@ const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
 
-  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -22,7 +21,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
 
     try {
       await axios.post(
-        `${apiUrl}/api/tweets/`,
+        `https://twitter-clone-sn7k.onrender.com/api/tweets/`,
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

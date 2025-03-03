@@ -33,8 +33,6 @@ const TweetFeed: React.FC = () => {
   const [displayedTweets, setDisplayedTweets] = useState(5);
   const [main, setMain] = useState("feed");
 
-  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
-
   const fetchTweets = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -43,9 +41,12 @@ const TweetFeed: React.FC = () => {
     }
 
     try {
-      const response = await axios.get(`${apiUrl}/api/tweets/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `https://twitter-clone-sn7k.onrender.com/api/tweets/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setTweets(response.data);
       setFilteredTweets(response.data);
     } catch {
