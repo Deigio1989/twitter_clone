@@ -33,7 +33,7 @@ const TweetFeed: React.FC = () => {
   const [displayedTweets, setDisplayedTweets] = useState(5);
   const [main, setMain] = useState("feed");
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   const fetchTweets = async () => {
     const token = localStorage.getItem("token");

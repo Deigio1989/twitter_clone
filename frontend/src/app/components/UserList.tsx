@@ -20,7 +20,7 @@ const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   const fetchUsers = async () => {
     try {

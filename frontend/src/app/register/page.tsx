@@ -12,7 +12,7 @@ const RegisterPage: React.FC = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

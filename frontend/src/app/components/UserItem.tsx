@@ -20,7 +20,7 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   useEffect(() => {
     const checkIfFollowing = async () => {
