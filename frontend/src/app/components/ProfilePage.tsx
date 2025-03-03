@@ -40,7 +40,7 @@ const ProfilePage = () => {
     }
   }, []);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   useEffect(() => {
     const fetchProfile = async () => {
