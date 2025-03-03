@@ -12,8 +12,6 @@ const RegisterPage: React.FC = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -32,11 +30,14 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await axios.post(`${apiUrl}/api/register/`, {
-        username,
-        email,
-        password,
-      });
+      await axios.post(
+        `https://twitter-clone-sn7k.onrender.com/api/register/`,
+        {
+          username,
+          email,
+          password,
+        }
+      );
 
       // Redirecione o usuário para a página de login após o registro
       router.push("/login");

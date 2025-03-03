@@ -40,14 +40,15 @@ const ProfilePage = () => {
     }
   }, []);
 
-  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
-
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${apiUrl}/api/users/profile/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `https://twitter-clone-sn7k.onrender.com/api/users/profile/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setProfile(response.data);
     };
     fetchProfile();
