@@ -84,12 +84,14 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-# "http://localhost:3000",
-# 'https://twitter-clone-gamma-virid.vercel.app',
-# ]
+CORS_ALLOWED_ORIGINS = [
+"http://localhost:3000",
+'https://twitter-clone-gamma-virid.vercel.app',
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 
 ROOT_URLCONF = 'twitter_clone.urls'

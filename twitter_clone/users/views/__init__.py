@@ -2,3 +2,9 @@ from .users_viewset import UserViewSet
 from .users_viewset import CustomTokenObtainPairView
 from .users_viewset import register_user
 from .users_viewset import login_user
+from .users_viewset import follow_user
+from .users_viewset import unfollow_user
+from .users_viewset import get_profile
+from .users_viewset import update_profile
+from .users_viewset import get_following
+from .users_viewset import get_followers
