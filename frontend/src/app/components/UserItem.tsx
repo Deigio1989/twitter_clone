@@ -19,6 +19,7 @@ interface UserItemProps {
 const UserItem: React.FC<UserItemProps> = ({ user }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const apiUrl = "https://twitter-clone-sn7k.onrender.com";
 
   useEffect(() => {
     const checkIfFollowing = async () => {
@@ -28,7 +29,6 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
           setLoading(false);
           return;
         }
-
         const response = await axios.get(
           `https://twitter-clone-sn7k.onrender.com/api/users/following/`,
           {
