@@ -31,7 +31,7 @@ const TweetFeed: React.FC = () => {
   const [filteredTweets, setFilteredTweets] = useState<Tweet[]>([]);
   const [error, setError] = useState("");
   const [displayedTweets, setDisplayedTweets] = useState(5);
-  const [main, setMain] = useState("feed");
+  const [main, setMain] = useState("profile");
 
   const fetchTweets = async () => {
     const token = localStorage.getItem("token");
