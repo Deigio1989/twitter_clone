@@ -7,7 +7,7 @@ interface UserProfile {
 }
 
 interface User {
-  user_id: number; // Usando user_id para manter a consistência
+  user_id: number;
   username: string;
   profile: UserProfile;
 }
@@ -29,18 +29,20 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
           setLoading(false);
           return;
         }
-        const response = await axios.get(
-          `https://twitter-clone-sn7k.onrender.com/api/users/following/`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        const followingUsers = response.data.following;
-
-        const isUserFollowing = followingUsers.some(
-          (followedUser: User) => followedUser.user_id === user.user_id
-        );
-        setIsFollowing(isUserFollowing);
+        const response = await axios.get(`${apiUrl}/api/users/following/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.status === 200) {
+          const followingUsers = response.data.following;
+          const isUserFollowing = followingUsers.some(
+            (followedUser: User) => followedUser.user_id === user.user_id
+          );
+          setIsFollowing(isUserFollowing);
+        } else {
+          console.error(
+            `Erro ao verificar se está seguindo o usuário: ${response.status}`
+          );
+        }
       } catch (error) {
         console.error("Erro ao verificar se está seguindo o usuário:", error);
       } finally {
@@ -48,7 +50,7 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
       }
     };
     checkIfFollowing();
-  }, [user.user_id, apiUrl]);
+  }, [user.user_id]);
 
   const handleFollow = async () => {
     try {
@@ -58,13 +60,18 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
         return;
       }
 
-      await axios.post(
+      const response = await axios.post(
         `${apiUrl}/api/follow/${user.user_id}/`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setIsFollowing(true);
-    } catch {
+      if (response.status === 200) {
+        setIsFollowing(true);
+      } else {
+        alert("Erro ao seguir o usuário. Tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao seguir o usuário:", error);
       alert("Erro ao seguir o usuário. Tente novamente.");
     }
   };
