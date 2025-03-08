@@ -6,6 +6,8 @@ import ProfilePage from "../components/ProfilePage";
 
 const FeedPage: React.FC = () => {
   const router = useRouter();
+  const [update, setUpdate] = React.useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
