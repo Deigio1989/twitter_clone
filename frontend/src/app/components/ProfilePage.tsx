@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { FaEdit } from "react-icons/fa";
 
 interface TokenPayload {
   username: string;
@@ -31,6 +32,7 @@ const ProfilePage = () => {
   const [newBio, setNewBio] = useState("");
   const [newBirthDate, setNewBirthDate] = useState("");
   const [username, setUsername] = useState<string | null>(null);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -68,6 +70,7 @@ const ProfilePage = () => {
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setProfile({ ...profile, bio: newBio, birth_date: newBirthDate });
+    setUpdate(false);
   };
 
   return (
@@ -87,36 +90,45 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="text-center mt-16">
-        <h1 className="text-2xl font-bold text-gray-800 text-center">
-          {username}
-        </h1>
-        <h2 className="text-lg font-bold text-gray-600">{profile.bio}</h2>
-        <p className="text-gray-600">Birth Date: {profile.birth_date}</p>
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold">Update Profile:</h3>
-          <div className="mt-4">
-            <input
-              type="text"
-              placeholder="New Bio"
-              value={newBio}
-              onChange={(e) => setNewBio(e.target.value)}
-              className="p-2 border border-gray-300 rounded-md mr-4"
+        {!update ? (
+          <div className="relative">
+            <FaEdit
+              className="absolute top-0 right-0 text-2xl text-gray-600 cursor-pointer"
+              onClick={() => setUpdate(true)}
             />
-            <input
-              type="date"
-              placeholder="New Birth Date"
-              value={newBirthDate}
-              onChange={(e) => setNewBirthDate(e.target.value)}
-              className="p-2 border border-gray-300 rounded-md mr-4"
-            />
-            <button
-              onClick={handleUpdateProfile}
-              className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Update
-            </button>
+            <h1 className="text-2xl font-bold text-gray-800 text-center">
+              {username}
+            </h1>
+            <h2 className="text-lg font-bold text-gray-600">{profile.bio}</h2>
+            <p className="text-gray-600">Birth Date: {profile.birth_date}</p>
           </div>
-        </div>
+        ) : (
+          <div>
+            <h3 className="text-xl font-semibold">Update Profile:</h3>
+            <div className="mt-4">
+              <input
+                type="text"
+                placeholder="New Bio"
+                value={newBio}
+                onChange={(e) => setNewBio(e.target.value)}
+                className="p-2 border border-gray-300 rounded-md mr-4"
+              />
+              <input
+                type="date"
+                placeholder="New Birth Date"
+                value={newBirthDate}
+                onChange={(e) => setNewBirthDate(e.target.value)}
+                className="p-2 border border-gray-300 rounded-md mr-4"
+              />
+              <button
+                onClick={handleUpdateProfile}
+                className="py-2 px-4 bg-blue-600 text-white rounded-full ml-8 hover:bg-blue-700"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
